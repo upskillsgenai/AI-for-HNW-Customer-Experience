@@ -3,7 +3,15 @@
 ## Overview
 JPMorgan leverages Generative AI to deliver hyper-personalized and efficient services to high-net-worth (HNW) clients. The AI serves as an advanced assistant to human advisors, enabling them to focus on high-value strategy and relationship-building.
 
-## Case Studies & Applications
+## Objective
+The primary objectives of implementing Generative AI solutions for HNW clients are:
+
+- **Enhance Client Personalization**: Deliver hyper-customized investment strategies and financial advice tailored to individual client profiles
+- **Increase Operational Efficiency**: Automate routine tasks and research processes to scale advisory services effectively
+- **Improve Advisor Productivity**: Empower wealth managers with AI-driven insights and tools to maximize client engagement
+- **Strengthen Competitive Positioning**: Leverage cutting-edge technology to maintain leadership in private banking services
+
+##  Applications
 
 ### 🤖 Ask David (Investment Research)
 - **Purpose**: AI-powered solution automating investment research
