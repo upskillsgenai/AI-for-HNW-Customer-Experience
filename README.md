@@ -87,4 +87,3 @@ JPMorgan continues to innovate in the AI space, with projected expansion of clie
 
 ---
 
-*For more detailed information on specific applications like IndexGPT or Coach AI, please refer to the individual case study documents.*
