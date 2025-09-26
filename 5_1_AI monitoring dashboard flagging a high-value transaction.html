@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Financial Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .light-mode {
+            background-color: #f7fafc;
+            color: #2d3748;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+        .dark-mode .card {
+            background-color: #2d3748;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <div class="min-h-screen p-8">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-8">
+            <h1 class="text-4xl font-bold">AI Financial Monitoring</h1>
+            <div class="flex items-center space-x-4">
+                <label for="csv-upload" class="bg-blue-500 text-white py-2 px-4 rounded-full font-semibold cursor-pointer hover:bg-blue-600 transition-colors">
+                    Upload CSV
+                    <input type="file" id="csv-upload" accept=".csv" class="hidden">
+                </label>
+                <button id="theme-toggle" class="p-2 rounded-full text-gray-700 bg-gray-200 dark:text-gray-300 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 21v-2.25m-6.364-.386 1.591-1.591M3 12h2.25m-.386-6.364 1.591 1.591M12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Alert Section (Dynamic) -->
+        <div id="alert-card" class="bg-red-500 text-white p-6 rounded-xl flex items-center justify-between mb-8 shadow-lg hidden">
+            <div class="flex items-center space-x-4">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
+                    <path fill-rule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0 1.155 2 4.043 2 5.197 0 .82-1.42 2.607-1.42 3.427 0C23.513 4.423 23.513 5.4 22.693 6.82c-.82 1.42-2.607 1.42-3.427 0a.75.75 0 0 0-1.286-.54l-3.83-6.634a.75.75 0 0 0-1.287.54l-3.83 6.634a.75.75 0 0 0-1.286-.54c-.82 1.42-2.607 1.42-3.427 0C.487 5.4.487 4.423 1.307 3.003c.82-1.42 2.607-1.42 3.427 0a.75.75 0 0 0 1.286-.54l3.83-6.634a.75.75 0 0 0 1.287.54l3.83 6.634a.75.75 0 0 0 1.286-.54Z" clip-rule="evenodd" />
+                </svg>
+                <div>
+                    <h2 class="text-2xl font-semibold">HIGH-VALUE TRANSACTION ALERT</h2>
+                    <p id="alert-message" class="mt-1">Suspicious transaction detected. Awaiting review.</p>
+                </div>
+            </div>
+            <div class="flex space-x-4">
+                <button class="bg-white text-red-500 py-2 px-6 rounded-full font-semibold hover:bg-gray-100 transition-colors">Review Details</button>
+            </div>
+        </div>
+
+        <!-- Dashboard Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Transaction Chart Card -->
+            <div class="lg:col-span-2 card p-6">
+                <h3 class="text-xl font-semibold mb-4">Transaction Volume by Value (USD)</h3>
+                <canvas id="transactionChart"></canvas>
+            </div>
+
+            <!-- Client Profile & Metrics Card -->
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-4">Client Risk Profile</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 rounded-xl bg-gray-100 dark:bg-gray-700">
+                        <div class="font-medium">Risk Score</div>
+                        <div class="text-2xl font-bold text-red-500">HIGH</div>
+                    </div>
+                    <div class="flex items-center justify-between p-4 rounded-xl bg-gray-100 dark:bg-gray-700">
+                        <div class="font-medium">Average Transaction</div>
+                        <div class="text-lg font-semibold">$45,000</div>
+                    </div>
+                    <div class="flex items-center justify-between p-4 rounded-xl bg-gray-100 dark:bg-gray-700">
+                        <div class="font-medium">Recent Locations</div>
+                        <div class="text-lg font-semibold">USA, UK, Switzerland</div>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <h4 class="text-lg font-semibold mb-2">Key Risk Factors</h4>
+                    <ul class="text-sm space-y-2">
+                        <li><span class="text-red-500 font-bold">●</span> Transaction amount is **20x** average.</li>
+                        <li><span class="text-red-500 font-bold">●</span> New beneficiary, unverified.</li>
+                        <li><span class="text-red-500 font-bold">●</span> Originating IP from a new device.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- New AI Insights Card -->
+            <div class="lg:col-span-3 card p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold">AI Insights & Analysis</h3>
+                    <div id="ai-loading-indicator" class="hidden text-sm text-gray-500">
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Analyzing...
+                    </div>
+                </div>
+                <div id="ai-insights-content" class="text-gray-700 dark:text-gray-300">
+                    <p>Upload a CSV file to get an AI-powered summary of your transactions.</p>
+                </div>
+            </div>
+
+            <!-- Recent Transactions Table -->
+            <div class="lg:col-span-3 card p-6 mt-8">
+                <h3 class="text-xl font-semibold mb-4">Recent Transactions</h3>
+                <div class="overflow-x-auto">
+                    <table id="transaction-table" class="w-full table-auto">
+                        <thead class="text-left font-semibold border-b-2 border-gray-200 dark:border-gray-700">
+                            <tr>
+                                <th class="py-2 px-4">Date</th>
+                                <th class="py-2 px-4">Description</th>
+                                <th class="py-2 px-4">Amount</th>
+                                <th class="py-2 px-4">Status</th>
+                                <th class="py-2 px-4">Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Table data will be dynamically populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data and configuration
+        let myChart;
+        const HIGH_VALUE_THRESHOLD = 500000;
+
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const csvUpload = document.getElementById('csv-upload');
+        const transactionTableBody = document.querySelector('#transaction-table tbody');
+        const alertCard = document.getElementById('alert-card');
+        const alertMessage = document.getElementById('alert-message');
+        const aiInsightsContent = document.getElementById('ai-insights-content');
+        const aiLoadingIndicator = document.getElementById('ai-loading-indicator');
+
+        // Initial empty chart setup
+        const ctx = document.getElementById('transactionChart').getContext('2d');
+        const initialData = {
+            labels: [],
+            datasets: [{
+                label: 'Daily Transaction Value',
+                data: [],
+                borderColor: '#ef4444',
+                backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                tension: 0.4,
+                fill: true
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: initialData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true },
+                    x: { grid: { display: false } }
+                }
+            }
+        };
+        myChart = new Chart(ctx, config);
+
+        // Theme toggle logic
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            body.classList.toggle('dark-mode');
+        });
+
+        // CSV processing and dashboard update
+        csvUpload.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const text = e.target.result;
+                const transactions = parseCSV(text);
+                updateDashboard(transactions);
+            };
+            reader.readAsText(file);
+        });
+
+        function parseCSV(text) {
+            const lines = text.trim().split('\n').slice(1); // Split by line, ignore header
+            const transactions = lines.map(line => {
+                const parts = line.split(',');
+                return {
+                    date: parts[0],
+                    description: parts[1],
+                    amount: parseFloat(parts[2]),
+                    status: parts[3],
+                    location: parts[4]
+                };
+            });
+            return transactions;
+        }
+
+        async function updateDashboard(transactions) {
+            // Update chart with new data
+            const amounts = transactions.map(t => t.amount);
+            const labels = transactions.map(t => t.date.split(' ')[0]);
+
+            myChart.data.labels = labels;
+            myChart.data.datasets[0].data = amounts;
+            myChart.update();
+
+            // Update transaction table
+            transactionTableBody.innerHTML = '';
+            let highValueTransaction = null;
+            let flaggedCount = 0;
+            const totalValue = transactions.reduce((sum, t) => sum + t.amount, 0);
+
+            transactions.forEach(t => {
+                const row = document.createElement('tr');
+                const isFlagged = t.amount >= HIGH_VALUE_THRESHOLD;
+                row.className = isFlagged ? 'border-b dark:border-gray-700 text-red-500 font-semibold' : 'border-b dark:border-gray-700';
+
+                row.innerHTML = `
+                    <td class="py-2 px-4">${t.date}</td>
+                    <td class="py-2 px-4">${t.description}</td>
+                    <td class="py-2 px-4">$${t.amount.toLocaleString()}</td>
+                    <td class="py-2 px-4">${isFlagged ? 'Flagged' : 'Approved'}</td>
+                    <td class="py-2 px-4">${t.location}</td>
+                `;
+                transactionTableBody.appendChild(row);
+
+                if (isFlagged) {
+                    highValueTransaction = t;
+                    flaggedCount++;
+                }
+            });
+
+            // Update alert
+            if (highValueTransaction) {
+                alertCard.classList.remove('hidden');
+                alertMessage.innerHTML = `Suspicious transaction of **$${highValueTransaction.amount.toLocaleString()}** detected. Awaiting review.`;
+            } else {
+                alertCard.classList.add('hidden');
+            }
+
+            // Get AI Insights (Static)
+            aiInsightsContent.innerHTML = '';
+            aiLoadingIndicator.classList.add('hidden');
+
+            const staticSummary = "The uploaded data shows a mix of routine transactions and a notable high-value transfer.";
+            const staticAnalysis = "The analysis indicates that while most transactions are typical, one significant wire transfer was automatically flagged for review. This transaction's amount is a major outlier compared to the average transaction value, which requires immediate attention for potential fraud or compliance issues.";
+            
+            aiInsightsContent.innerHTML = `
+                <p class="font-bold mb-2">${staticSummary}</p>
+                <p class="text-sm">${staticAnalysis}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

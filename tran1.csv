@@ -1,0 +1,191 @@
+Date,Description,Amount,Status,Location,
+22-09-25 14:21,Wire Transfer to Zurich Bank,2000000,Flagged,Zurich, Switzerland
+22-09-25 10:45,Retail Purchase - London,1200.5,Approved,London, UK
+21-09-25 16:30,Online Subscription Renewal,99.99,Approved,New York, USA
+21-09-25 12:15,Consulting Fee Payment,35000,Approved,New York, USA
+20-09-25 09:00,Gas & Groceries,150.25,Approved,San Francisco, USA
+19-09-25 18:00,Utility Bill Payment,250,Approved,Chicago, USA
+18-09-25 20:05,Online Shopping,85.75,Approved,Paris, France
+17-09-25 11:30,Restaurant Bill,75.5,Approved,New York, USA
+16-09-25 15:00,Freelance Project Payment,5000,Approved,Berlin, Germany
+15-09-25 17:45,Gym Membership,60,Approved,London, UK
+14-09-25 10:20,Medical Bill,300,Approved,New York, USA
+13-09-25 19:35,Software License,2500,Approved,Tokyo, Japan
+12-09-25 11:55,Travel Booking,850,Approved,Rome, Italy
+11-09-25 14:10,Investment Transfer,55000,Approved,New York, USA
+10-09-25 16:25,Online Course Fee,199,Approved,New York, USA
+23-09-25 08:30,Online Purchase,125.5,Approved,London, UK
+23-09-25 11:15,Service Payment,850,Approved,Paris, France
+23-09-25 15:40,Retail Transaction,45.75,Approved,New York, USA
+23-09-25 18:20,Salary Deposit,7500,Approved,New York, USA
+24-09-25 09:10,Medical Fee,250,Approved,Sydney, Australia
+24-09-25 13:00,Freelance Invoice,1500,Approved,Berlin, Germany
+24-09-25 16:50,High-Value Transfer,850000,Flagged,Dubai, UAE
+25-09-25 08:00,Crypto Exchange,15000,Approved,Singapore,
+25-09-25 12:45,International Payment,500,Approved,Tokyo, Japan
+25-09-25 17:30,Retail Transaction,99.99,Approved,New York, USA
+26-09-25 09:45,Online Purchase,75.2,Approved,London, UK
+26-09-25 14:00,Service Payment,300,Approved,Paris, France
+26-09-25 18:10,Salary Deposit,8200,Approved,New York, USA
+27-09-25 10:20,Medical Fee,180,Approved,Sydney, Australia
+27-09-25 15:35,High-Value Transfer,1200000,Flagged,Toronto, Canada
+28-09-25 08:45,Online Purchase,55.1,Approved,New York, USA
+28-09-25 13:20,Freelance Invoice,2200,Approved,Berlin, Germany
+28-09-25 17:50,International Payment,450,Approved,Tokyo, Japan
+29-09-25 09:00,Retail Transaction,120,Approved,New York, USA
+29-09-25 14:30,Crypto Exchange,25000,Approved,Singapore,
+30-09-25 08:55,High-Value Transfer,950000,Flagged,Dubai, UAE
+30-09-25 13:40,Online Purchase,85.5,Approved,London, UK
+30-09-25 18:25,Service Payment,400,Approved,Paris, France
+01-10-25 10:15,Salary Deposit,7800,Approved,New York, USA
+01-10-25 15:30,Medical Fee,200,Approved,Sydney, Australia
+02-10-25 09:20,Freelance Invoice,1800,Approved,Berlin, Germany
+02-10-25 14:40,International Payment,350,Approved,Tokyo, Japan
+02-10-25 19:15,Retail Transaction,65,Approved,New York, USA
+03-10-25 11:00,Online Purchase,110,Approved,London, UK
+03-10-25 16:30,High-Value Transfer,1500000,Flagged,Toronto, Canada
+04-10-25 09:50,Service Payment,600,Approved,Paris, France
+04-10-25 14:25,Salary Deposit,8500,Approved,New York, USA
+05-10-25 10:05,Medical Fee,320,Approved,Sydney, Australia
+05-10-25 15:15,Freelance Invoice,2000,Approved,Berlin, Germany
+06-10-25 08:35,Online Purchase,90.5,Approved,New York, USA
+06-10-25 13:50,High-Value Transfer,750000,Flagged,Dubai, UAE
+07-10-25 09:10,International Payment,250,Approved,Tokyo, Japan
+07-10-25 15:40,Retail Transaction,88.88,Approved,New York, USA
+08-10-25 10:30,Crypto Exchange,30000,Approved,Singapore,
+08-10-25 16:55,High-Value Transfer,2500000,Flagged,Toronto, Canada
+09-10-25 09:40,Online Purchase,150,Approved,London, UK
+09-10-25 14:25,Service Payment,450,Approved,Paris, France
+10-10-25 10:00,Salary Deposit,7900,Approved,New York, USA
+10-10-25 15:30,Medical Fee,280,Approved,Sydney, Australia
+11-10-25 08:50,Freelance Invoice,1900,Approved,Berlin, Germany
+11-10-25 14:15,International Payment,480,Approved,Tokyo, Japan
+12-10-25 10:25,Retail Transaction,77.77,Approved,New York, USA
+12-10-25 15:00,High-Value Transfer,1800000,Flagged,Dubai, UAE
+13-10-25 09:30,Online Purchase,105,Approved,New York, USA
+13-10-25 14:45,Crypto Exchange,18000,Approved,Singapore,
+14-10-25 10:10,High-Value Transfer,900000,Flagged,Toronto, Canada
+14-10-25 15:20,Service Payment,320,Approved,Paris, France
+15-10-25 08:40,Salary Deposit,8100,Approved,New York, USA
+15-10-25 13:00,Medical Fee,290,Approved,Sydney, Australia
+16-10-25 10:50,Freelance Invoice,2300,Approved,Berlin, Germany
+16-10-25 15:15,International Payment,520,Approved,Tokyo, Japan
+17-10-25 09:20,Retail Transaction,135,Approved,New York, USA
+17-10-25 14:55,High-Value Transfer,3000000,Flagged,Mexico City, Mexico
+18-10-25 10:05,Online Purchase,95.5,Approved,London, UK
+18-10-25 15:30,Service Payment,650,Approved,Paris, France
+19-10-25 09:40,Salary Deposit,8300,Approved,New York, USA
+19-10-25 14:15,Medical Fee,350,Approved,Sydney, Australia
+20-10-25 08:30,Freelance Invoice,2100,Approved,Berlin, Germany
+20-10-25 13:50,International Payment,400,Approved,Tokyo, Japan
+21-10-25 09:10,Retail Transaction,115,Approved,New York, USA
+21-10-25 15:25,High-Value Transfer,1100000,Flagged,Mexico City, Mexico
+22-10-25 09:35,Online Purchase,88,Approved,London, UK
+22-10-25 14:00,Service Payment,500,Approved,Paris, France
+23-10-25 10:15,Salary Deposit,8000,Approved,New York, USA
+23-10-25 15:40,Medical Fee,270,Approved,Sydney, Australia
+24-10-25 09:00,Freelance Invoice,1700,Approved,Berlin, Germany
+24-10-25 14:30,International Payment,380,Approved,Tokyo, Japan
+25-10-25 09:50,Retail Transaction,90,Approved,New York, USA
+25-10-25 15:10,Crypto Exchange,22000,Approved,Singapore,
+26-10-25 09:25,High-Value Transfer,600000,Flagged,Dubai, UAE
+26-10-25 14:40,Online Purchase,100,Approved,London, UK
+27-10-25 10:30,Service Payment,550,Approved,Paris, France
+27-10-25 16:00,Salary Deposit,8400,Approved,New York, USA
+28-10-25 09:15,Medical Fee,310,Approved,Sydney, Australia
+28-10-25 14:50,Freelance Invoice,2000,Approved,Berlin, Germany
+29-10-25 09:40,International Payment,420,Approved,Tokyo, Japan
+29-10-25 15:20,High-Value Transfer,1600000,Flagged,Mexico City, Mexico
+30-10-25 08:50,Retail Transaction,80,Approved,New York, USA
+30-10-25 13:10,Online Purchase,120,Approved,London, UK
+31-10-25 09:30,Service Payment,490,Approved,Paris, France
+31-10-25 14:00,Salary Deposit,8600,Approved,New York, USA
+01-11-25 09:20,Medical Fee,330,Approved,Sydney, Australia
+01-11-25 14:45,High-Value Transfer,1900000,Flagged,Dubai, UAE
+02-11-25 10:00,Freelance Invoice,2400,Approved,Berlin, Germany
+02-11-25 15:15,International Payment,550,Approved,Tokyo, Japan
+03-11-25 09:45,Retail Transaction,140,Approved,New York, USA
+03-11-25 14:30,Crypto Exchange,28000,Approved,Singapore,
+04-11-25 09:00,High-Value Transfer,2200000,Flagged,Mexico City, Mexico
+04-11-25 14:20,Online Purchase,112,Approved,London, UK
+05-11-25 09:50,Service Payment,580,Approved,Paris, France
+05-11-25 15:00,Salary Deposit,8700,Approved,New York, USA
+06-11-25 09:25,Medical Fee,305,Approved,Sydney, Australia
+06-11-25 14:40,Freelance Invoice,2150,Approved,Berlin, Germany
+07-11-25 10:00,International Payment,470,Approved,Tokyo, Japan
+07-11-25 15:10,Retail Transaction,105,Approved,New York, USA
+08-11-25 09:30,High-Value Transfer,1300000,Flagged,Toronto, Canada
+08-11-25 14:55,Online Purchase,98,Approved,New York, USA
+09-11-25 10:15,Crypto Exchange,20000,Approved,Singapore,
+09-11-25 15:30,High-Value Transfer,850000,Flagged,Dubai, UAE
+10-11-25 09:40,Service Payment,510,Approved,Paris, France
+10-11-25 14:05,Salary Deposit,8900,Approved,New York, USA
+11-11-25 09:00,Medical Fee,295,Approved,Sydney, Australia
+11-11-25 14:25,Freelance Invoice,1950,Approved,Berlin, Germany
+12-11-25 10:00,International Payment,410,Approved,Tokyo, Japan
+12-11-25 15:15,Retail Transaction,128,Approved,New York, USA
+13-11-25 09:35,High-Value Transfer,2500000,Flagged,Toronto, Canada
+13-11-25 14:50,Online Purchase,130,Approved,London, UK
+14-11-25 09:10,Service Payment,620,Approved,Paris, France
+14-11-25 14:40,Salary Deposit,9000,Approved,New York, USA
+15-11-25 09:55,Medical Fee,340,Approved,Sydney, Australia
+15-11-25 15:05,Freelance Invoice,2250,Approved,Berlin, Germany
+16-11-25 09:20,International Payment,500,Approved,Tokyo, Japan
+16-11-25 14:30,Retail Transaction,118,Approved,New York, USA
+17-11-25 08:45,High-Value Transfer,1700000,Flagged,Mexico City, Mexico
+17-11-25 13:55,Online Purchase,115,Approved,London, UK
+18-11-25 09:05,Service Payment,480,Approved,Paris, France
+18-11-25 14:15,Salary Deposit,8800,Approved,New York, USA
+19-11-25 09:30,Medical Fee,285,Approved,Sydney, Australia
+19-11-25 14:50,Freelance Invoice,1850,Approved,Berlin, Germany
+20-11-25 09:00,International Payment,390,Approved,Tokyo, Japan
+20-11-25 14:20,Retail Transaction,95,Approved,New York, USA
+21-11-25 08:30,High-Value Transfer,1250000,Flagged,Toronto, Canada
+21-11-25 13:40,Online Purchase,105,Approved,London, UK
+22-11-25 09:50,Service Payment,530,Approved,Paris, France
+22-11-25 15:00,Salary Deposit,9100,Approved,New York, USA
+23-11-25 09:25,Medical Fee,325,Approved,Sydney, Australia
+23-11-25 14:40,Freelance Invoice,2100,Approved,Berlin, Germany
+24-11-25 08:50,International Payment,460,Approved,Tokyo, Japan
+24-11-25 13:30,Retail Transaction,130,Approved,New York, USA
+25-11-25 09:00,High-Value Transfer,950000,Flagged,Dubai, UAE
+25-11-25 14:10,Online Purchase,122,Approved,London, UK
+26-11-25 09:20,Service Payment,570,Approved,Paris, France
+26-11-25 14:50,Salary Deposit,9200,Approved,New York, USA
+27-11-25 10:00,Medical Fee,350,Approved,Sydney, Australia
+27-11-25 15:15,Freelance Invoice,2350,Approved,Berlin, Germany
+28-11-25 09:30,International Payment,510,Approved,Tokyo, Japan
+28-11-25 14:40,Retail Transaction,155,Approved,New York, USA
+29-11-25 09:50,High-Value Transfer,2000000,Flagged,Mexico City, Mexico
+29-11-25 15:00,Online Purchase,140,Approved,London, UK
+30-11-25 09:10,Service Payment,600,Approved,Paris, France
+30-11-25 14:20,Salary Deposit,9300,Approved,New York, USA
+01-12-25 08:30,Medical Fee,360,Approved,Sydney, Australia
+01-12-25 13:40,Freelance Invoice,2500,Approved,Berlin, Germany
+02-12-25 09:50,International Payment,580,Approved,Tokyo, Japan
+02-12-25 14:05,Retail Transaction,160,Approved,New York, USA
+03-12-25 09:15,High-Value Transfer,1850000,Flagged,Toronto, Canada
+03-12-25 14:30,Online Purchase,135,Approved,London, UK
+04-12-25 09:40,Service Payment,650,Approved,Paris, France
+04-12-25 15:00,Salary Deposit,9400,Approved,New York, USA
+05-12-25 09:20,Medical Fee,375,Approved,Sydney, Australia
+05-12-25 14:40,Freelance Invoice,2600,Approved,Berlin, Germany
+06-12-25 09:50,International Payment,610,Approved,Tokyo, Japan
+06-12-25 15:15,Retail Transaction,170,Approved,New York, USA
+07-12-25 09:00,High-Value Transfer,1400000,Flagged,Mexico City, Mexico
+07-12-25 14:20,Online Purchase,150,Approved,London, UK
+08-12-25 09:30,Service Payment,700,Approved,Paris, France
+08-12-25 14:45,Salary Deposit,9500,Approved,New York, USA
+09-12-25 09:55,Medical Fee,380,Approved,Sydney, Australia
+09-12-25 15:10,Freelance Invoice,2700,Approved,Berlin, Germany
+10-12-25 09:20,International Payment,650,Approved,Tokyo, Japan
+10-12-25 14:35,Retail Transaction,180,Approved,New York, USA
+11-12-25 08:50,High-Value Transfer,1950000,Flagged,Toronto, Canada
+11-12-25 14:15,Online Purchase,160,Approved,London, UK
+12-12-25 09:25,Service Payment,720,Approved,Paris, France
+12-12-25 14:50,Salary Deposit,9600,Approved,New York, USA
+13-12-25 10:05,Medical Fee,390,Approved,Sydney, Australia
+13-12-25 15:20,Freelance Invoice,2800,Approved,Berlin, Germany
+14-12-25 09:35,International Payment,680,Approved,Tokyo, Japan
+14-12-25 14:50,Retail Transaction,190,Approved,New York, USA
+15-12-25 09:00,High-Value Transfer,2050000,Flagged,Mexico City, Mexico

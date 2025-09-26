@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Monitoring Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            transition: background-color 0.3s;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .risk-high {
+            background-color: #fee2e2;
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
+    <div class="container mx-auto space-y-6">
+        <!-- Header -->
+        <div class="text-center">
+            <h1 class="text-3xl font-bold text-gray-800">AI Monitoring Dashboard</h1>
+            <p class="text-gray-500 mt-2">HNW Client Transaction Monitoring</p>
+        </div>
+
+        <div class="card p-6">
+            <div class="flex flex-col md:flex-row items-center md:items-start justify-between mb-4 pb-4 border-b border-gray-200">
+                <div class="flex items-center space-x-4">
+                    <div class="rounded-full w-16 h-16 bg-gray-200 flex items-center justify-center text-gray-500 text-2xl font-bold">
+                        J. D.
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">Johnathan Delacroix</h2>
+                        <p class="text-sm text-gray-500">HNW Client | ID: HNW-789-ABC</p>
+                    </div>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <div class="text-center font-bold text-red-600 bg-red-100 py-2 px-6 rounded-full uppercase text-sm">
+                        High-Risk Transaction Detected
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Transaction Details Card -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="card p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Transaction Overview</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                            <div class="p-4 rounded-lg bg-gray-50">
+                                <p class="text-sm text-gray-500">Amount</p>
+                                <p class="font-bold text-xl text-red-600">$2,000,000 USD</p>
+                            </div>
+                            <div class="p-4 rounded-lg bg-gray-50">
+                                <p class="text-sm text-gray-500">Location</p>
+                                <p class="font-bold text-xl text-gray-800">Zurich, Switzerland</p>
+                            </div>
+                            <div class="p-4 rounded-lg bg-gray-50">
+                                <p class="text-sm text-gray-500">Date & Time</p>
+                                <p class="font-bold text-xl text-gray-800">2025-09-22, 14:21</p>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">Transaction History</h3>
+                            <canvas id="transactionChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Actions -->
+                    <div class="card p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Recommended Actions</h3>
+                        <div id="action-message-box" class="mt-4 text-center text-sm font-semibold transition-all duration-300 transform -translate-y-2 opacity-0"></div>
+                        <div class="flex flex-col sm:flex-row gap-4 mt-4">
+                            <button id="call-client-btn" class="flex-1 bg-blue-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                Call Client for Verification
+                            </button>
+                            <button id="flag-review-btn" class="flex-1 bg-yellow-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                Flag for Compliance Review
+                            </button>
+                            <button id="suspend-btn" class="flex-1 bg-red-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
+                                Temporarily Suspend Transaction
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Insights & Risk Factors Card -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="card p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">AI-Generated Risk Factors</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li class="flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2d/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                </svg>
+                                <span>Transaction amount is 20x average.</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2d/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                </svg>
+                                <span>New beneficiary, unverified.</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2d/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                </svg>
+                                <span>Originating IP from a new device.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="card p-6 text-center">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Risk Score</h3>
+                        <div class="flex items-center justify-center">
+                            <div class="risk-high font-bold text-5xl rounded-full p-4 w-24 h-24 flex items-center justify-center">
+                                High
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chartCtx = document.getElementById('transactionChart').getContext('2d');
+            const actionMessageBox = document.getElementById('action-message-box');
+            const callClientBtn = document.getElementById('call-client-btn');
+            const flagReviewBtn = document.getElementById('flag-review-btn');
+            const suspendBtn = document.getElementById('suspend-btn');
+
+            const data = {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Transaction Volume (USD)',
+                    data: [50000, 75000, 60000, 80000, 90000, 2000000, 70000],
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: function(context) {
+                        const index = context.dataIndex;
+                        const value = context.dataset.data[index];
+                        return value > 1000000 ? 'rgba(239, 68, 68, 1)' : 'rgba(59, 130, 246, 1)';
+                    },
+                    pointBorderColor: 'rgba(255, 255, 255, 1)',
+                    pointRadius: function(context) {
+                        const index = context.dataIndex;
+                        const value = context.dataset.data[index];
+                        return value > 1000000 ? 8 : 4;
+                    },
+                    tension: 0.4
+                }]
+            };
+
+            const config = {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                drawBorder: false,
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            };
+
+            new Chart(chartCtx, config);
+
+            function showActionMessage(message, colorClass) {
+                actionMessageBox.textContent = message;
+                actionMessageBox.className = `mt-4 text-center text-sm font-semibold transition-all duration-300 transform translate-y-0 opacity-100 ${colorClass}`;
+                setTimeout(() => {
+                    actionMessageBox.className = `mt-4 text-center text-sm font-semibold transition-all duration-300 transform -translate-y-2 opacity-0`;
+                }, 3000); // Message disappears after 3 seconds
+            }
+
+            callClientBtn.addEventListener('click', () => {
+                showActionMessage('Action logged: Employee is now calling the client for verification.', 'text-blue-600');
+            });
+
+            flagReviewBtn.addEventListener('click', () => {
+                showActionMessage('Transaction has been flagged for compliance review.', 'text-yellow-600');
+            });
+
+            suspendBtn.addEventListener('click', () => {
+                showActionMessage('Transaction has been temporarily suspended pending client verification.', 'text-red-600');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HNW Virtual Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .chat-bubble {
+            max-width: 80%;
+            border-radius: 1rem;
+            padding: 0.75rem 1rem;
+            line-height: 1.5;
+        }
+        .chat-user {
+            background-color: #3b82f6;
+            color: white;
+            border-bottom-right-radius: 0.25rem;
+        }
+        .chat-ai {
+            background-color: #e5e7eb;
+            color: #1f2937;
+            border-bottom-left-radius: 0.25rem;
+        }
+        .chat-rm {
+            background-color: #6ee7b7;
+            color: #166534;
+            border-radius: 1rem;
+            border-bottom-left-radius: 0.25rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="container mx-auto p-4 flex flex-col md:flex-row h-[95vh] gap-6">
+        <!-- Client Profile Sidebar -->
+        <div class="w-full md:w-1/4 card p-6 flex flex-col items-center">
+            <div class="rounded-full w-24 h-24 bg-gray-200 flex items-center justify-center text-gray-500 text-3xl font-bold mb-4">
+                J. D.
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800">Johnathan Delacroix</h2>
+            <p class="text-sm text-gray-500">HNW Client | Since 2015</p>
+            <div class="mt-6 w-full space-y-4">
+                <div class="p-4 bg-gray-100 rounded-lg">
+                    <h3 class="font-semibold text-gray-700">Portfolio</h3>
+                    <p class="text-sm text-gray-600">$54.3M USD</p>
+                </div>
+                <div class="p-4 bg-gray-100 rounded-lg">
+                    <h3 class="font-semibold text-gray-700">Risk Profile</h3>
+                    <p class="text-sm text-gray-600">Growth-Oriented</p>
+                </div>
+                <div class="p-4 bg-gray-100 rounded-lg">
+                    <h3 class="font-semibold text-gray-700">Recent Activity</h3>
+                    <ul class="text-xs text-gray-600 mt-1 space-y-1">
+                        <li>- $1.2M transfer to London</li>
+                        <li>- Concierge: requested tickets for The Met Gala</li>
+                        <li>- Meeting with Investment Team</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chat Interface -->
+        <div class="w-full md:w-3/4 card p-6 flex flex-col">
+            <div class="flex-1 overflow-y-auto mb-4 p-4 rounded-lg bg-gray-50 flex flex-col space-y-4" id="chat-history">
+                <!-- Initial message -->
+                <div class="flex justify-start">
+                    <div class="chat-bubble chat-ai">
+                        Hello. I'm your AI HNW Assistant. How can I help with a client service request today?
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input area -->
+            <div class="relative">
+                <input type="text" id="user-input" placeholder="Try: 'book flights from [source] to [destination]' or 'escalate'"
+                       class="w-full pl-4 pr-12 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button id="send-btn" class="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg xmlns="http://www.w3.org/2d/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path d="M3.478 2.405a.75.75 0 0 0-.926.94l2.432 7.945a.75.75 0 0 0 .926.94L16.273 12l-10.35 1.71a.75.75 0 0 0-.926.94l2.432 7.945a.75.75 0 0 0 .926.94 1.45 1.45 0 0 0 1.298-.052l18-9a.75.75 0 0 0 .002-1.397l-18-9a1.45 1.45 0 0 0-1.298-.052Z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatHistory = document.getElementById('chat-history');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const conversationLog = [];
+
+        function addMessage(sender, text, isEscalation = false) {
+            const messageWrapper = document.createElement('div');
+            messageWrapper.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+
+            const messageBubble = document.createElement('div');
+            
+            if (isEscalation) {
+                messageBubble.className = 'chat-bubble chat-rm';
+                let htmlContent = `
+                    <p class="font-bold mb-2">Escalation Handover to Human RM</p>
+                    <p class="text-sm">Hi, I'm the Relationship Manager. I have been handed the following context from the AI assistant. How can I assist you further?</p>
+                    <div class="mt-4 p-3 bg-white rounded-lg border border-gray-200">
+                        <h4 class="font-semibold text-gray-800 text-sm">Conversation Context:</h4>
+                        <ul class="list-disc list-inside mt-1 text-xs text-gray-700 space-y-1">
+                `;
+                text.forEach(entry => {
+                    htmlContent += `<li><strong>${entry.sender}:</strong> ${entry.text}</li>`;
+                });
+                htmlContent += `</ul></div>`;
+                messageBubble.innerHTML = htmlContent;
+            } else if (sender === 'ai' && typeof text === 'object') {
+                messageBubble.className = 'chat-bubble chat-ai';
+                let htmlContent = `
+                    <p class="font-bold mb-2">${text.response}</p>
+                    <div class="mt-4">
+                        <h4 class="font-semibold text-sm">Recommended Next Steps:</h4>
+                        <ul class="list-disc list-inside mt-1 space-y-1 text-gray-700">
+                `;
+                text.next_steps.forEach(step => {
+                    htmlContent += `<li>${step}</li>`;
+                });
+                htmlContent += `</ul></div>`;
+                messageBubble.innerHTML = htmlContent;
+            } else {
+                messageBubble.className = `chat-bubble ${sender === 'user' ? 'chat-user' : 'chat-ai'}`;
+                messageBubble.textContent = text;
+            }
+            
+            messageWrapper.appendChild(messageBubble);
+            chatHistory.appendChild(messageWrapper);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        async function handleUserQuery() {
+            const query = userInput.value.trim();
+            if (query === "") return;
+
+            addMessage('user', query);
+            conversationLog.push({ sender: 'employee', text: query });
+            userInput.value = "";
+
+            // Check for escalation keywords first
+            const cleanedQuery = query.toLowerCase();
+            const escalationKeywords = ['escalate', 'talk to a human', 'speak with a manager', 'transfer to rm'];
+            if (escalationKeywords.some(keyword => cleanedQuery.includes(keyword))) {
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                addMessage('ai', "I'm escalating this request to the Relationship Management team. A human RM will take over now.", false);
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                addMessage('rm', conversationLog, true);
+                return;
+            }
+
+            const loadingMessage = "Analyzing request...";
+            addMessage('ai', loadingMessage);
+
+            let aiResponse;
+            if (cleanedQuery.includes("book flights from")) {
+                const parts = cleanedQuery.split(" from ");
+                const destinationParts = parts.length > 1 ? parts[1].split(" to ") : [];
+                const source = destinationParts[0] || "his current location";
+                const destination = destinationParts[1] || "Monaco";
+                
+                aiResponse = {
+                    response: `I've located a business-class flight from ${source} to ${destination} for Mr. Delacroix on his preferred carrier, PrivateWings. The flight is scheduled for October 10th at 14:00. The cost is approximately $22,500 USD.`,
+                    next_steps: [
+                        "Confirm the flight time and fare with the client.",
+                        "Request a signed travel authorization form.",
+                        `Notify the client's driver and local contacts in ${destination}.`
+                    ]
+                };
+            } else if (cleanedQuery.includes("investment query about")) {
+                const parts = cleanedQuery.split("investment query about");
+                const topic = parts.length > 1 ? parts[1].trim() : "the tech sector";
+                
+                aiResponse = {
+                    response: `Mr. Delacroix's portfolio is currently optimized for growth. Following a recent downturn in ${topic}, we see an opportunity for a strategic reallocation of 5% into diversified high-yield bonds.`,
+                    next_steps: [
+                        "Schedule a meeting with the client's investment advisor.",
+                        "Prepare a detailed report on the proposed bond re-allocation.",
+                        "Confirm if the client's risk tolerance is still aligned with the strategy."
+                    ]
+                };
+            } else if (cleanedQuery.includes("concierge request for")) {
+                const parts = cleanedQuery.split("concierge request for");
+                const requestDetails = parts.length > 1 ? parts[1].trim() : "a restaurant reservation";
+                
+                aiResponse = {
+                    response: `I've sourced and confirmed a reservation for Mr. Delacroix for ${requestDetails}. I've also arranged for a chauffeured Mercedes-Benz to transport him.`,
+                    next_steps: [
+                        "Send a confirmation email to the client with all reservation details.",
+                        "Inform the client's personal assistant of the arrangements.",
+                        "Update the concierge log with the booking confirmation."
+                    ]
+                };
+            } else {
+                aiResponse = {
+                    response: "I am designed to handle a wide range of HNW client requests. Please provide a clear and specific query, such as 'book flights from [source] to [destination]', 'investment query about [topic]', or 'concierge request for [details]'.",
+                    next_steps: [
+                        "Clarify the request with the client.",
+                        "Gather all relevant details (dates, locations, preferences)."
+                    ]
+                };
+            }
+
+            // Remove loading message and add actual response
+            const aiMessageElements = chatHistory.querySelectorAll('.chat-ai');
+            const lastAiMessage = aiMessageElements[aiMessageElements.length - 1];
+            
+            const messageBubble = lastAiMessage.querySelector('.chat-bubble');
+            
+            let htmlContent = `
+                <p class="font-bold mb-2">${aiResponse.response}</p>
+                <div class="mt-4">
+                    <h4 class="font-semibold text-sm">Recommended Next Steps:</h4>
+                    <ul class="list-disc list-inside mt-1 space-y-1 text-gray-700">
+            `;
+            aiResponse.next_steps.forEach(step => {
+                htmlContent += `<li>${step}</li>`;
+            });
+            htmlContent += `</ul></div>`;
+            
+            messageBubble.innerHTML = htmlContent;
+            conversationLog.push({ sender: 'AI', text: aiResponse.response });
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        sendBtn.addEventListener('click', handleUserQuery);
+        userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                handleUserQuery();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Portfolio Recommender</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .container-bg {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="container-bg w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden p-8 md:p-12">
+        
+        <!-- Header Section -->
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-extrabold text-gray-900">AI Portfolio Recommender</h1>
+            <p class="text-lg text-gray-500 font-medium mt-2">Personalized investment strategies in an instant.</p>
+        </div>
+
+        <!-- Input Form -->
+        <div id="input-form" class="bg-gray-50 p-8 rounded-2xl shadow-md border border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Tell us about you.</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <label for="risk" class="block text-gray-700 font-semibold mb-2">Your Risk Tolerance</label>
+                    <select id="risk" class="w-full p-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="low">Low (Conservative)</option>
+                        <option value="medium">Medium (Balanced)</option>
+                        <option value="high">High (Growth)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="horizon" class="block text-gray-700 font-semibold mb-2">Your Investment Horizon</label>
+                    <select id="horizon" class="w-full p-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="short">Short Term (< 5 years)</option>
+                        <option value="medium">Medium Term (5-10 years)</option>
+                        <option value="long">Long Term (> 10 years)</option>
+                    </select>
+                </div>
+            </div>
+            <button id="analyze-btn" class="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95">
+                Get My Recommendation
+            </button>
+        </div>
+
+        <!-- Recommendation Display -->
+        <div id="recommendation-result" class="hidden mt-12">
+            <div class="bg-green-50 p-8 rounded-2xl shadow-md border border-green-200">
+                <h2 class="text-2xl font-bold text-green-800 mb-6">Your Personalized Recommendation</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Text Summary -->
+                    <div>
+                        <div id="recommendation-summary" class="text-gray-700 space-y-4">
+                            <!-- Summary will be populated here -->
+                        </div>
+                        <button id="restart-btn" class="mt-8 w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-full transition-colors duration-300">
+                            Start a New Analysis
+                        </button>
+                    </div>
+
+                    <!-- Pie Chart -->
+                    <div class="flex items-center justify-center">
+                        <div class="relative w-full max-w-sm h-72">
+                            <canvas id="portfolioChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const inputForm = document.getElementById('input-form');
+        const recommendationResult = document.getElementById('recommendation-result');
+        const riskInput = document.getElementById('risk');
+        const horizonInput = document.getElementById('horizon');
+        const recommendationSummaryEl = document.getElementById('recommendation-summary');
+        const portfolioChartCtx = document.getElementById('portfolioChart').getContext('2d');
+
+        // Pre-defined recommendations
+        const recommendations = {
+            'low-short': {
+                summary: `Given your conservative risk tolerance and short-term horizon, this portfolio prioritizes capital preservation and stability. It focuses on low-volatility assets to protect your principal.`,
+                allocation: { bonds: 60, stocks: 25, cash: 15 }
+            },
+            'low-medium': {
+                summary: `This portfolio is designed for long-term growth while minimizing risk. It maintains a stable core with a moderate allocation to equities for steady appreciation.`,
+                allocation: { bonds: 50, stocks: 40, alternatives: 10 }
+            },
+            'low-long': {
+                summary: `This is a balanced portfolio for a long-term investor who is risk-averse. It includes a higher allocation to growth assets for potential returns over time while maintaining stability.`,
+                allocation: { bonds: 40, stocks: 50, alternatives: 10 }
+            },
+            'medium-short': {
+                summary: `A balanced approach for the short term, this portfolio aims for a mix of stability and moderate growth. It includes a higher-than-normal cash position to capitalize on opportunities.`,
+                allocation: { bonds: 40, stocks: 45, cash: 15 }
+            },
+            'medium-medium': {
+                summary: `This is our core balanced portfolio. It aims for a mix of capital preservation and growth, suitable for a mid-range time horizon. It is diversified across multiple asset classes.`,
+                allocation: { stocks: 60, bonds: 30, alternatives: 10 }
+            },
+            'medium-long': {
+                summary: `Designed for a long-term investor with a moderate risk appetite, this portfolio focuses on growth and diversification. It seeks to outperform inflation and generate significant capital appreciation over time.`,
+                allocation: { stocks: 70, bonds: 20, alternatives: 10 }
+            },
+            'high-short': {
+                summary: `A growth-oriented portfolio for the short term. This strategy is for an investor comfortable with higher volatility, seeking aggressive returns from key market trends.`,
+                allocation: { stocks: 75, cash: 15, bonds: 10 }
+            },
+            'high-medium': {
+                summary: `This is a classic growth portfolio, suitable for a medium-term horizon. It maximizes exposure to high-growth sectors and emerging markets.`,
+                allocation: { stocks: 80, bonds: 10, alternatives: 10 }
+            },
+            'high-long': {
+                summary: `An aggressive growth portfolio for the long-term investor. This strategy seeks to maximize returns through a high concentration of equities and alternative investments.`,
+                allocation: { stocks: 90, alternatives: 10 }
+            }
+        };
+
+        let myChart = null;
+
+        function updateChart(data) {
+            if (myChart) {
+                myChart.destroy();
+            }
+
+            const labels = Object.keys(data);
+            const values = Object.values(data);
+            const backgroundColors = [
+                'rgba(59, 130, 246, 0.8)', // blue
+                'rgba(34, 197, 94, 0.8)',  // green
+                'rgba(251, 191, 36, 0.8)', // yellow
+                'rgba(239, 68, 68, 0.8)'   // red
+            ];
+            const hoverColors = [
+                'rgba(59, 130, 246, 1)',
+                'rgba(34, 197, 94, 1)',
+                'rgba(251, 191, 36, 1)',
+                'rgba(239, 68, 68, 1)'
+            ];
+
+            myChart = new Chart(portfolioChartCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels.map(l => l.charAt(0).toUpperCase() + l.slice(1)),
+                    datasets: [{
+                        data: values,
+                        backgroundColor: backgroundColors,
+                        hoverBackgroundColor: hoverColors,
+                        borderWidth: 2,
+                        borderColor: '#ffffff',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    family: 'Inter',
+                                    size: 14
+                                },
+                                boxWidth: 20,
+                                boxHeight: 20,
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += context.parsed + '%';
+                                    return label;
+                                }
+                            },
+                            bodyFont: {
+                                family: 'Inter',
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            titleFont: {
+                                family: 'Inter'
+                            }
+                        }
+                    },
+                    cutout: '60%',
+                }
+            });
+        }
+
+        analyzeBtn.addEventListener('click', () => {
+            const risk = riskInput.value;
+            const horizon = horizonInput.value;
+            const key = `${risk}-${horizon}`;
+
+            if (recommendations[key]) {
+                const recommendation = recommendations[key];
+                
+                // Update text summary
+                recommendationSummaryEl.innerHTML = `
+                    <p class="text-xl font-semibold mb-4">Summary</p>
+                    <p class="leading-relaxed">${recommendation.summary}</p>
+                    <p class="mt-6 text-xl font-semibold">Recommended Asset Allocation</p>
+                    <ul class="list-disc list-inside mt-2 space-y-2">
+                        ${Object.entries(recommendation.allocation).map(([asset, percentage]) => `
+                            <li><span class="font-bold">${asset.charAt(0).toUpperCase() + asset.slice(1)}:</span> ${percentage}%</li>
+                        `).join('')}
+                    </ul>
+                `;
+
+                // Update chart
+                updateChart(recommendation.allocation);
+
+                // Show results and hide form
+                inputForm.classList.add('hidden');
+                recommendationResult.classList.remove('hidden');
+            } else {
+                alert('Invalid selection. Please choose both risk and horizon.');
+            }
+        });
+
+        restartBtn.addEventListener('click', () => {
+            inputForm.classList.remove('hidden');
+            recommendationResult.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
